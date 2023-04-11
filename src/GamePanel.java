@@ -17,17 +17,35 @@ public class GamePanel extends JPanel implements ActionListener {
     int appleEaten;
     int appleX;
     int appleY;
+    char direction = 'R';
+    boolean running = false;
+    Timer timer;
+    Random random;
 
     GamePanel() {
-
+        random = new Random();
+        this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+        this.setBackground(Color.BLACK);
+        this.setFocusable(true);
+        this.addKeyListener(new MyKeyAdapter());
+        startGame();
     }
     public void startGame() {
-
+        newApple();
+        running = true;
+        timer = new Timer(DELAY,this);
+        timer.start();
     }
     public void paintComponent(Graphics g) {
-
+        super.paintComponent(g);
+        draw(g);
     }
     public void draw(Graphics g) {
+        for(int i = 0; i < SCREEN_HEIGHT/UNIT_SIZE; i++) {
+            g.drawLine(i*UNIT_SIZE, 0, i*UNIT_SIZE, SCREEN_HEIGHT);
+        }
+    }
+    public void newApple() {
 
     }
     public void move() {
@@ -48,10 +66,6 @@ public class GamePanel extends JPanel implements ActionListener {
 
     }
 
-    public class MyKeyAdapter extends KeyAdapter {
-        @Override
-        public void keyPressed(KeyEvent e) {
-
-        }
+    public static class MyKeyAdapter extends KeyAdapter {
     }
 }
